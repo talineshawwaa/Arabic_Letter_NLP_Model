@@ -94,7 +94,5 @@ The final character-level dataset contains:
 - Numerical identifiers (e.g., `letter_id`, `base_shape_unicode`)
 - **Custom letter embeddings** from FastText (e.g., `embedding_0`, ..., `embedding_49`)
 
-This structured dataset (`final_char_features.csv`) is now ready for model training, analysis, or further processing.
-
-The final dataset with data cleaning, preprocessing and feature extraction can be found [here](https://drive.google.com/drive/folders/1xy5vNc_Hw3x796Qd2hBBd4CoP4g7rMtz?usp=sharing)
+This structured dataset (`final_char_features.csv`) is now ready for model training, analysis, or further processing. The final dataset with data cleaning, preprocessing and feature extraction can be found [here](https://drive.google.com/drive/folders/1xy5vNc_Hw3x796Qd2hBBd4CoP4g7rMtz?usp=sharing)
 ---
