@@ -50,3 +50,50 @@ We performed the following preprocessing steps using the code provided in the no
 
 7. **Output**  
    The final cleaned DataFrame contains the original lemma, its normalized
+
+## Step 3: Feature Extraction
+
+To train a model that can understand Arabic letter morphology, we extracted both handcrafted and learned features from the cleaned dataset. These features capture the visual, positional, and contextual properties of each letter within its lemma.
+
+---
+
+### A. Positional Shape-Based Features
+
+Each Arabic letter varies in shape depending on its position within a word — isolated, initial, medial, or final. We extracted features that describe:
+
+- **Letter**: The normalized Arabic letter.
+- **Character Index**: The position of the letter within its word.
+- **Letter Position**: A label indicating whether the letter appears at the beginning, middle, end, or as a standalone character.
+- **Shape Variants**: A list of Unicode representations for how the letter appears in different positions.
+- **Number of Shape Variants**: Indicates morphological complexity of the letter.
+- **Base Unicode**: Unicode of the primary shape (used as an additional signal).
+
+We also one-hot encoded the letter positions (`pos_initial`, `pos_medial`, `pos_final`, `pos_isolated`) to make them machine-readable.
+
+---
+
+### B. Embedding-Based Features
+
+To capture deeper semantic and contextual relationships, we extracted learned vector representations (embeddings) for each letter using two strategies:
+
+1. **Custom Letter-Level FastText Embeddings**  
+   We trained a FastText model directly on character sequences from our dataset. Each word was treated as a list of characters, and FastText learned sub-character co-occurrence patterns. This resulted in a 50-dimensional vector for each Arabic letter that captures its contextual usage.
+
+2. **Word-Level Embeddings with AraBERT (optional)**  
+   For more advanced models, we also extracted lemma-level contextual embeddings using the pretrained AraBERT model. These embeddings represent the entire word's semantic content and can help enhance performance in downstream NLP tasks.
+
+---
+
+### Final Feature Set
+
+The final character-level dataset contains:
+
+- `lemma_id`, `lemma`, `char_index`, `letter`
+- Encoded position features (e.g., `pos_medial`)
+- Morphological shape features (e.g., number of shape variants)
+- Numerical identifiers (e.g., `letter_id`, `base_shape_unicode`)
+- **Custom letter embeddings** from FastText (e.g., `embedding_0`, ..., `embedding_49`)
+
+This structured dataset (`final_char_features.csv`) is now ready for model training, analysis, or further processing.
+
+---
